@@ -12,7 +12,7 @@ internal class Repo<TEntity> where TEntity : class
         _context = context;
     }
 
-    public TEntity Create(TEntity entity)
+    public virtual TEntity Create(TEntity entity)
     {
         try
         {
@@ -24,7 +24,7 @@ internal class Repo<TEntity> where TEntity : class
         return null!;
     }
 
-    public IEnumerable<TEntity> GetAll()
+    public virtual IEnumerable<TEntity> GetAll()
     {
         try
         {
@@ -34,7 +34,7 @@ internal class Repo<TEntity> where TEntity : class
         return null!;
     }
 
-    public TEntity Get(Expression<Func<TEntity, bool>> expression)
+    public virtual TEntity Get(Expression<Func<TEntity, bool>> expression)
     {
         try
         {
@@ -45,7 +45,7 @@ internal class Repo<TEntity> where TEntity : class
         return null!;
     }
 
-    public TEntity Update(Expression<Func<TEntity, bool>> expression, TEntity entity)
+    public virtual TEntity Update(Expression<Func<TEntity, bool>> expression, TEntity entity)
     {
         try
         {
@@ -58,13 +58,14 @@ internal class Repo<TEntity> where TEntity : class
         return null!;
     }
 
-    public void Delete(Expression<Func<TEntity, bool>> expression)
+    public virtual bool Delete(Expression<Func<TEntity, bool>> expression)
     {
         try
         {
             var entity = _context.Set<TEntity>().FirstOrDefault(expression);
             _context.Remove(entity!);
+            return true;
         }
-        catch (Exception ex) { Console.WriteLine(ex.Message);}
+        catch (Exception ex) { Console.WriteLine(ex.Message); return false; }
     }
 }
