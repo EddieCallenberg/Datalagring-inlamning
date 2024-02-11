@@ -71,13 +71,13 @@ internal class ProductService
         return updatedEntity;
     }
 
-    public bool DeletProduct(int id)
+    public void DeletProduct(int id)
     {
         try
         {
             _productRepository.Delete(x => x.Id == id);
-            return true;
+            
         }
-        catch (Exception ex) { Console.WriteLine(ex.Message); return false; }
+        catch (Exception ex) { Console.WriteLine(ex.Message); }
     }
 }

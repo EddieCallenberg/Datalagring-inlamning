@@ -58,14 +58,14 @@ internal class Repo<TEntity> where TEntity : class
         return null!;
     }
 
-    public virtual bool Delete(Expression<Func<TEntity, bool>> expression)
+    public virtual void Delete(Expression<Func<TEntity, bool>> expression)
     {
         try
         {
             var entity = _context.Set<TEntity>().FirstOrDefault(expression);
             _context.Remove(entity!);
-            return true;
+            _context.SaveChanges();
         }
-        catch (Exception ex) { Console.WriteLine(ex.Message); return false; }
+        catch (Exception ex) { Console.WriteLine(ex.Message); }
     }
 }
